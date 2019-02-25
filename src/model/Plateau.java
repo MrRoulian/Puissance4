@@ -16,13 +16,17 @@ public class Plateau extends Observable{
 	public Plateau(int lignes, int colonnes){
 
 		joueur1 = new Humain(1);
-		joueur2 = new Humain(2);
+		joueur2 = new Robot(2);
 
 		joueurCourant = joueur1;
 
 		nbLignes = lignes;
 		nbColonnes = colonnes;
 		plateau = new int[lignes][colonnes];
+	}
+
+	public boolean joueurCourantIsRobot() {
+		return joueurCourant.isRobot();
 	}
 
 	public int getNbColonnes() {
@@ -51,6 +55,14 @@ public class Plateau extends Observable{
 
 			this.setChanged();
 			this.notifyObservers();
+			
+			if (end){
+				return;
+			}
+			
+			if (joueurCourant.isRobot()){
+				jouer(0);
+			}
 		}
 	}
 

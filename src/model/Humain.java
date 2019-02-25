@@ -27,4 +27,9 @@ public class Humain extends Joueur {
 		return new Point(ligne,colonne);
 	}
 
+	@Override
+	public boolean isRobot() {
+		return false;
+	}
+
 }

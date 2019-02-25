@@ -38,7 +38,7 @@ public class VuePlateau implements Observer {
 		panel = new JPanel();
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(800, 500);
+		frame.setSize(800, 800);
 		
 		layout = new GridLayout(plateau.getNbLignes()+1, plateau.getNbColonnes());
 		panel.setLayout(layout);

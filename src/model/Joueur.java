@@ -15,5 +15,7 @@ public abstract class Joueur {
 	public int getNumJoueur(){
 		return numJoueur;
 	}
+	
+	public abstract boolean isRobot();
 
 }
