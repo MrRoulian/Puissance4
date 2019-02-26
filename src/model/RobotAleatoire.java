@@ -32,4 +32,9 @@ public class RobotAleatoire extends Robot {
 		return new Point(ligne,colonne);	
 	}
 
+	@Override
+	public Joueur clone() {
+		return new RobotAleatoire(numJoueur);
+	}
+
 }

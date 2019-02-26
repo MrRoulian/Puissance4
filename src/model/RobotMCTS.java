@@ -90,4 +90,10 @@ public class RobotMCTS extends Robot {
 			return nodeMax;
 		}
 	}
+
+
+	@Override
+	public Joueur clone() {
+		return new RobotMCTS(numJoueur);
+	}
 }

@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Observable;
 
 public class Plateau extends Observable{
@@ -13,8 +14,7 @@ public class Plateau extends Observable{
 	private Joueur joueurCourant;
 	private Joueur joueur1, joueur2;
 
-	public Plateau(int lignes, int colonnes){
-
+	public Plateau(int lignes, int colonnes) {
 		joueur1 = new Humain(1);
 		joueur2 = new Humain(2);
 
@@ -24,7 +24,18 @@ public class Plateau extends Observable{
 		nbColonnes = colonnes;
 		plateau = new int[lignes][colonnes];
 	}
-	
+
+	public Plateau(Plateau p) {
+		joueur1 = p.joueur1.clone();
+		joueur2 = p.joueur2.clone();
+
+		joueurCourant = p.joueurCourant.getNumJoueur() == 1 ? joueur1 : joueur2;
+
+		nbLignes = p.nbLignes;
+		nbColonnes = p.nbColonnes;
+		plateau = p.plateau.clone();
+	}
+
 	public void lancerPartie() {
 		if (joueurCourant.isRobot()) jouer(0);
 	}	
@@ -45,13 +56,20 @@ public class Plateau extends Observable{
 		return plateau[ligne][colonne];
 	}
 
-	public void jouer(int colonne) {
+	public ArrayList<Integer> getIndicesColonnesJouables(){
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		for (int i = 0 ; i < nbColonnes ; i++){
+			if (plateau[0][i] == 0){
+				res.add(i);
+			}
+		}
+		return res;
+	}
 
-		Point endroitJoue = joueurCourant.jouer(colonne,this);
-		
+	public void jouer(int colonne) {
+		Point endroitJoue = joueurCourant.jouer(colonne,this);		
 		//si il a pu jouer
 		if (endroitJoue != null) {
-
 			plateau[endroitJoue.x][endroitJoue.y] = joueurCourant.getNumJoueur();
 			joueurCourant = joueurCourant.getNumJoueur() == 1 ? joueur2 : joueur1;
 
@@ -59,14 +77,29 @@ public class Plateau extends Observable{
 
 			this.setChanged();
 			this.notifyObservers();
-			
+
 			if (end) {
 				return;
 			}
-			
+
 			if (joueurCourant.isRobot()){
 				jouer(0);
 			}
+		}
+	}
+
+	public void jouerColonne(int colonne){
+		int ligne = -1;
+		
+		for (int i = nbLignes-1; i >= 0; i--){
+			if (plateau[i][colonne] == 0){
+				ligne = i;
+				break;
+			}
+		}
+		
+		if (ligne > 0){
+			plateau[ligne][colonne] = joueurCourant.getNumJoueur();
 		}
 	}
 
@@ -86,7 +119,6 @@ public class Plateau extends Observable{
 				end &= plateau[i][j] != 0;
 			}
 		}
-
 
 		//Vérif win
 		for (int i = 0; i < nbLignes; i++) {
@@ -155,14 +187,14 @@ public class Plateau extends Observable{
 		if (end || win)	{
 			end = true;
 		}
-		
+
 		return winner;
 	}
 
 	public boolean isEnded() {
 		return end;
 	}
-	
+
 	public int getNumJoueurCourrant(){
 		return joueurCourant.getNumJoueur();
 	}
