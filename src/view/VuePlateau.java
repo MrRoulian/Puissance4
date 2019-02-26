@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -23,7 +24,7 @@ public class VuePlateau implements Observer {
 	private ArrayList<JButton> bouttons;
 	private HashMap<Point,JLabel> labels;
 	private JFrame frame;
-	private JPanel panel;
+	private JPanel panelGrid;
 	private PanelDetails details;
 	private Plateau plateau;
 
@@ -36,14 +37,14 @@ public class VuePlateau implements Observer {
 
 	private void initFrame() {
 		frame = new JFrame("Puissance 4");
-		panel = new JPanel();
+		panelGrid = new JPanel();
 		details = new PanelDetails(plateau);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 800);
 		
-		layout = new GridLayout(plateau.getNbLignes()+2, plateau.getNbColonnes());
-		panel.setLayout(layout);
+		layout = new GridLayout(plateau.getNbLignes()+1, plateau.getNbColonnes());
+		panelGrid.setLayout(layout);
 		
 		JButton b;
 		JLabel label;
@@ -53,21 +54,22 @@ public class VuePlateau implements Observer {
 					b = new JButton();
 					b.addActionListener(new JouerBoutton(j, plateau));
 					bouttons.add(b);
-					panel.add("Boutton"+j, b);
+					panelGrid.add("Boutton"+j, b);
 				} else {
 					label = new JLabel();
 					label.setOpaque(true);
 					label.setBackground(Color.GRAY);
 					label.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 					labels.put(new Point(i-1,j),label);
-					panel.add("Label"+(i*plateau.getNbLignes()+j), label);					
+					panelGrid.add("Label"+(i*plateau.getNbLignes()+j), label);					
 				}
 			}
 		}
 		
-		panel.add("PanelDetails", details);
-		
-		frame.setContentPane(panel);		
+		frame.setLayout(new BorderLayout());
+		frame.add(panelGrid);
+		frame.add(details, BorderLayout.EAST);
+
 		frame.setVisible(true);
 		
 	}
