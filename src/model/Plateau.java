@@ -71,7 +71,7 @@ public class Plateau extends Observable{
 		//si il a pu jouer
 		if (endroitJoue != null) {
 			plateau[endroitJoue.x][endroitJoue.y] = joueurCourant.getNumJoueur();
-			joueurCourant = joueurCourant.getNumJoueur() == 1 ? joueur2 : joueur1;
+			switchJoueurCourant();
 
 			verifState();
 
@@ -197,5 +197,9 @@ public class Plateau extends Observable{
 
 	public int getNumJoueurCourrant(){
 		return joueurCourant.getNumJoueur();
+	}
+	
+	public void switchJoueurCourant(){
+		joueurCourant = joueurCourant.getNumJoueur() == 1 ? joueur2 : joueur1;
 	}
 }

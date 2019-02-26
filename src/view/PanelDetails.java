@@ -37,6 +37,10 @@ public class PanelDetails extends JPanel {
 	}
 	
 	public void updateLabels() {
+		if (plateau.joueurCourantIsRobot()){
+			nbSimu.setText("Nombre de simulation : ");
+			pourcentageWin.setText("%");
+		}
 		joueurCourrant.setBackground(plateau.getNumJoueurCourrant() == 1 ? Color.RED : Color.YELLOW);
 	}
 
