@@ -17,6 +17,9 @@ public class RobotMCTS extends Robot {
 		int nbOperation = 0;
 		while (System.currentTimeMillis() - temps < 3000) {
 			nbOperation++;
+			
+			
+			
 		}
 		System.out.println(nbOperation);
 		return new Point(0, 0);
@@ -27,13 +30,21 @@ public class RobotMCTS extends Robot {
 		private Node parent;
 		private ArrayList<Node> fils;
 		
+		public int signe;
+		
 		private final double C = Math.sqrt(2);
 		public int N = 0;
 		public double mu;
 		
+		public Node() {
+			signe = 1;
+			fils = new ArrayList<Node>();
+		}
+		
 		public Node(Node parent) {
 			this.parent = parent;
 			fils = new ArrayList<Node>();
+			this.signe = parent.signe * -1;
 		}
 		
 		public void addFils(Node fils) {
@@ -50,12 +61,17 @@ public class RobotMCTS extends Robot {
 		}
 		
 		public double getBvalue() {
-			return mu + C * Math.sqrt(Math.log10(parent.N) / N);
+			return mu + signe * (C * Math.sqrt(Math.log10(parent.N) / N));
 		}
 		
 		public Node nodeMax() {
 			if (fils.size() == 0) {
 				return this;
+			}
+			for (Node node : fils) {
+				if (node.N == 0){
+					return this;
+				}
 			}
 			Node nodeMax = this;
 			for (Node node : fils) {
