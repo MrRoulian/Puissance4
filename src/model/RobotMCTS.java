@@ -18,8 +18,6 @@ public class RobotMCTS extends Robot {
 		while (System.currentTimeMillis() - temps < 3000) {
 			nbOperation++;
 			
-			
-			
 		}
 		System.out.println(nbOperation);
 		return new Point(0, 0);
@@ -65,20 +63,15 @@ public class RobotMCTS extends Robot {
 		}
 		
 		public Node nodeMax() {
-			if (fils.size() == 0) {
+			if (fils.size() == 0)
 				return this;
-			}
-			for (Node node : fils) {
-				if (node.N == 0){
+			for (Node node : fils)
+				if (node.N == 0)
 					return this;
-				}
-			}
 			Node nodeMax = this;
-			for (Node node : fils) {
-				if (nodeMax.getBvalue() < node.nodeMax().getBvalue()) {
+			for (Node node : fils)
+				if (nodeMax.getBvalue() < node.nodeMax().getBvalue()) 
 					nodeMax = node;
-				}
-			}
 			return nodeMax;
 		}
 	}
