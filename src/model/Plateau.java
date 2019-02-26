@@ -16,7 +16,7 @@ public class Plateau extends Observable{
 
 	public Plateau(int lignes, int colonnes) {
 		joueur1 = new Humain(1);
-		joueur2 = new RobotMCTS(2);
+		joueur2 = new Humain(2);
 
 		joueurCourant = joueur1;
 
@@ -198,13 +198,8 @@ public class Plateau extends Observable{
 			}
 		}
 
-		if (win) {
-			//System.out.println("Joueur " + winner + " à gagné !");
-		}
-
 		if (end) {
 			winner = 0;
-			System.out.println("Match null");
 		}
 
 		if (end || win)	{
