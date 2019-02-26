@@ -18,7 +18,7 @@ public class JouerBoutton implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (!p.joueurCourantIsRobot()){
-			p.jouer(colonne);			
+			p.jouer(colonne);		
 		}
 	}
 

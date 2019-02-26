@@ -111,6 +111,8 @@ public class Plateau extends Observable{
 		if (ligne >= 0){
 			plateau[ligne][colonne] = joueurCourant.getNumJoueur();
 		}
+		
+		verifState();
 	}
 
 	/*
