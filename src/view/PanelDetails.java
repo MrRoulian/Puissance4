@@ -19,9 +19,8 @@ public class PanelDetails extends JPanel {
 		initFrame();
 	}
 
-	private void initFrame() {
-		
-		layout = new GridLayout(4,1);
+	private void initFrame() {		
+		layout = new GridLayout(10,1);
 		
 		nbSimu = new JLabel("5 simu");
 		pourcentageWin = new JLabel("80%");
