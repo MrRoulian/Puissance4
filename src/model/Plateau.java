@@ -16,9 +16,9 @@ public class Plateau extends Observable{
 
 	public Plateau(int lignes, int colonnes) {
 		joueur1 = new Humain(1);
-		joueur2 = new Humain(2);
+		joueur2 = new RobotMCTS(2);
 
-		joueurCourant = joueur2;
+		joueurCourant = joueur1;
 
 		nbLignes = lignes;
 		nbColonnes = colonnes;
@@ -106,7 +106,7 @@ public class Plateau extends Observable{
 	/*
 	 * @return -1 si la partie n'est pas fini, 0 si il y a match null, et le numéro du vainceur si il y en a un
 	 */
-	private int verifState() {
+	public int verifState() {
 		boolean win = false;
 		int winner = -1;
 

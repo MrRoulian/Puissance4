@@ -2,6 +2,8 @@ package model;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 public class RobotMCTS extends Robot {
 	
@@ -16,15 +18,41 @@ public class RobotMCTS extends Robot {
 		temps = System.currentTimeMillis();		
 		// On cree la racine de l'arbre 
 		Node racine = new Node(p);
+		racine.genererFils();
 		
 		int nbOperation = 0;
 		while (System.currentTimeMillis() - temps < 3000) {
 			nbOperation++;
-			// On prend le noeud qui est terminal ou qui a des fils non developpé 
+			// On prend le noeud qui est terminal ou qui a des fils non developpe
 			Node node = racine.nodeMax();
-			
+			// On joue jusqu'a finir
+			while (!node.plateau.isEnded()) {
+				node.genererFils();
+				node = node.randomFilsNonVisite();
+			}
+			int score = 0;
+			if (node.plateau.verifState() == p.getNumJoueurCourrant()) {
+				score = 1;
+			}
+			// On met a jours les N et les mu 
+			node.update(score);
+			while (node.parent != null) {
+				node = node.parent;
+				node.update(score);
+			}
 		}
 		System.out.println(nbOperation);
+		
+		// On recupere le meilleur coup (recompense "max") 
+		Node max = racine.fils.get(0);
+		for (Node node : racine.fils) {
+			if (node.mu > max.mu) {
+				max = node;
+			}
+		}
+		
+		
+		
 		return new Point(0, 0);
 	}
 
@@ -34,7 +62,7 @@ public class RobotMCTS extends Robot {
 		private ArrayList<Node> fils;
 		
 		public int signe;
-		private Plateau plateau;
+		public Plateau plateau;
 		
 		private final double C = Math.sqrt(2);
 		public int N = 0;
@@ -49,6 +77,7 @@ public class RobotMCTS extends Robot {
 		public Node(Plateau p, Node parent) {
 			this.parent = parent;
 			plateau = new Plateau(p);
+			
 			fils = new ArrayList<Node>();
 			this.signe = parent.signe * -1;
 		}
@@ -89,6 +118,16 @@ public class RobotMCTS extends Robot {
 				if (nodeMax.getBvalue() < node.nodeMax().getBvalue()) 
 					nodeMax = node;
 			return nodeMax;
+		}
+		
+		public Node randomFilsNonVisite() {
+			Collections.shuffle(fils);
+			for (Node node : fils) {
+				if (node.N == 0) {
+					return node;
+				}
+			}
+			return null;
 		}
 	}
 
