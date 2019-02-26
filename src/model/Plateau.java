@@ -16,13 +16,17 @@ public class Plateau extends Observable{
 	public Plateau(int lignes, int colonnes){
 
 		joueur1 = new Humain(1);
-		joueur2 = new Robot(2);
+		joueur2 = new RobotAleatoire(2);
 
-		joueurCourant = joueur1;
+		joueurCourant = joueur2;
 
 		nbLignes = lignes;
 		nbColonnes = colonnes;
 		plateau = new int[lignes][colonnes];
+		
+		if (joueurCourant.isRobot()){
+			jouer(0);
+		}
 	}
 
 	public boolean joueurCourantIsRobot() {
@@ -45,8 +49,8 @@ public class Plateau extends Observable{
 
 		Point endroitJoue = joueurCourant.jouer(colonne,this);
 		
-		//si il a pu joueur
-		if (endroitJoue != null) {			
+		//si il a pu jouer
+		if (endroitJoue != null) {
 
 			plateau[endroitJoue.x][endroitJoue.y] = joueurCourant.getNumJoueur();
 			joueurCourant = joueurCourant.getNumJoueur() == 1 ? joueur2 : joueur1;

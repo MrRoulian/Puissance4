@@ -7,6 +7,7 @@ public class Main {
 		Plateau p = new Plateau(6, 7);
 		VuePlateau vp = new VuePlateau(p);
 		p.addObserver(vp);
+		vp.update(p, null);
 	}
 
 }
