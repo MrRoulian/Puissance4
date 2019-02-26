@@ -52,5 +52,18 @@ public class RobotMCTS extends Robot {
 		public double getBvalue() {
 			return mu + C * Math.sqrt(Math.log10(parent.N) / N);
 		}
+		
+		public Node nodeMax() {
+			if (fils.size() == 0) {
+				return this;
+			}
+			Node nodeMax = this;
+			for (Node node : fils) {
+				if (nodeMax.getBvalue() < node.nodeMax().getBvalue()) {
+					nodeMax = node;
+				}
+			}
+			return nodeMax;
+		}
 	}
 }
