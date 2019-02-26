@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Observable;
 
 public class Plateau extends Observable{
@@ -13,8 +14,7 @@ public class Plateau extends Observable{
 	private Joueur joueurCourant;
 	private Joueur joueur1, joueur2;
 
-	public Plateau(int lignes, int colonnes){
-
+	public Plateau(int lignes, int colonnes) {
 		joueur1 = new Humain(1);
 		joueur2 = new RobotMCTS(2);
 
@@ -23,6 +23,17 @@ public class Plateau extends Observable{
 		nbLignes = lignes;
 		nbColonnes = colonnes;
 		plateau = new int[lignes][colonnes];
+	}
+	
+	public Plateau(Plateau p) {
+		joueur1 = p.joueur1.clone();
+		joueur2 = p.joueur2.clone();
+
+		joueurCourant = p.joueurCourant.getNumJoueur() == 1 ? joueur1 : joueur2;
+
+		nbLignes = p.nbLignes;
+		nbColonnes = p.nbColonnes;
+		plateau = p.plateau.clone();
 	}
 	
 	public void lancerPartie() {
@@ -45,13 +56,20 @@ public class Plateau extends Observable{
 		return plateau[ligne][colonne];
 	}
 
+	public ArrayList<Integer> getIndicesColonnesJouables(){
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		for (int i = 0 ; i < nbColonnes ; i++){
+			if (plateau[0][i] == 0){
+				res.add(i);
+			}
+		}
+		return res;
+	}
+	
 	public void jouer(int colonne) {
-
-		Point endroitJoue = joueurCourant.jouer(colonne,this);
-		
+		Point endroitJoue = joueurCourant.jouer(colonne,this);		
 		//si il a pu jouer
 		if (endroitJoue != null) {
-
 			plateau[endroitJoue.x][endroitJoue.y] = joueurCourant.getNumJoueur();
 			joueurCourant = joueurCourant.getNumJoueur() == 1 ? joueur2 : joueur1;
 
@@ -86,7 +104,6 @@ public class Plateau extends Observable{
 				end &= plateau[i][j] != 0;
 			}
 		}
-
 
 		//Vérif win
 		for (int i = 0; i < nbLignes; i++) {

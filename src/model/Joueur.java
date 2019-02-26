@@ -17,5 +17,7 @@ public abstract class Joueur {
 	}
 	
 	public abstract boolean isRobot();
+	
+	public abstract Joueur clone();
 
 }
