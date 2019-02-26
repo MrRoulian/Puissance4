@@ -8,7 +8,7 @@ public class Main {
 		VuePlateau vp = new VuePlateau(p);
 		p.addObserver(vp);
 		
-		vp.update(p, null);
+		p.lancerPartie();
 	}
 
 }

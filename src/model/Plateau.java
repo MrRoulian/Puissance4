@@ -23,11 +23,11 @@ public class Plateau extends Observable{
 		nbLignes = lignes;
 		nbColonnes = colonnes;
 		plateau = new int[lignes][colonnes];
-		
-		if (joueurCourant.isRobot()){
-			jouer(0);
-		}
 	}
+	
+	public void lancerPartie() {
+		if (joueurCourant.isRobot()) jouer(0);
+	}	
 
 	public boolean joueurCourantIsRobot() {
 		return joueurCourant.isRobot();
