@@ -83,22 +83,21 @@ public class Plateau extends Observable{
 		//si il a pu jouer
 		if (endroitJoue != null) {
 			plateau[endroitJoue.x][endroitJoue.y] = joueurCourant.getNumJoueur();
-
-			//update mu et N
-			this.setChanged();
-			this.notifyObservers();
-
-			switchJoueurCourant();
-
 			verifState();
 
-			//update joueurCourant
+			//update mu et N
 			this.setChanged();
 			this.notifyObservers();
 
 			if (end) {
 				return;
 			}
+
+			switchJoueurCourant();
+
+			//update joueurCourant
+			this.setChanged();
+			this.notifyObservers();
 
 			if (joueurCourant.isRobot()){
 				jouer(0);
