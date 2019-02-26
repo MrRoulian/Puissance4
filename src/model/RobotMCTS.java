@@ -59,8 +59,9 @@ public class RobotMCTS extends Robot {
 		
 		public void genererFils() {
 			for (Integer indice : plateau.getIndicesColonnesJouables()) {
-				plateau.jouerColonne(indice);
-				
+				Plateau p = new Plateau(plateau);
+				p.jouerColonne(indice);
+				fils.add(new Node(p, this));
 			}
 		}
 		
