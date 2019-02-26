@@ -106,7 +106,7 @@ public class Plateau extends Observable{
 		}
 	}
 
-	private void switchJoueurCourant() {
+	public void switchJoueurCourant() {
 		joueurCourant = joueurCourant.getNumJoueur() == 1 ? joueur2 : joueur1;		
 	}
 
