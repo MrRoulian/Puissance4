@@ -89,14 +89,14 @@ public class VuePlateau implements Observer {
 					getLabel(i, j).setBackground(valCase == 1 ? Color.RED : Color.YELLOW);
 				}
 			}
-		}	
+		}
+		
+		details.updateLabels();
 		
 		if (plateau.isEnded()){
 			disableBouttons();
 			return;
-		}
-		
-		details.updateLabels();
+		}		
 	}
 
 	private void disableBouttons() {

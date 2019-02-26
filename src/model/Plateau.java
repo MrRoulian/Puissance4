@@ -16,7 +16,7 @@ public class Plateau extends Observable{
 
 	public Plateau(int lignes, int colonnes) {
 		joueur1 = new Humain(1);
-		joueur2 = new RobotMCTS(2);
+		joueur2 = new Humain(2);
 
 		joueurCourant = joueur1;
 
@@ -83,22 +83,21 @@ public class Plateau extends Observable{
 		//si il a pu jouer
 		if (endroitJoue != null) {
 			plateau[endroitJoue.x][endroitJoue.y] = joueurCourant.getNumJoueur();
-
-			//update mu et N
-			this.setChanged();
-			this.notifyObservers();
-
-			switchJoueurCourant();
-
 			verifState();
 
-			//update joueurCourant
+			//update mu et N
 			this.setChanged();
 			this.notifyObservers();
 
 			if (end) {
 				return;
 			}
+
+			switchJoueurCourant();
+
+			//update joueurCourant
+			this.setChanged();
+			this.notifyObservers();
 
 			if (joueurCourant.isRobot()){
 				jouer(0);
@@ -199,13 +198,8 @@ public class Plateau extends Observable{
 			}
 		}
 
-		if (win) {
-			//System.out.println("Joueur " + winner + " à gagné !");
-		}
-
 		if (end) {
 			winner = 0;
-			System.out.println("Match null");
 		}
 
 		if (end || win)	{
