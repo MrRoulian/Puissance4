@@ -32,9 +32,4 @@ public class Humain extends Joueur {
 		return false;
 	}
 
-	@Override
-	public Joueur clone() {
-		return new Humain(numJoueur);
-	}
-
 }

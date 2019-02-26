@@ -71,10 +71,16 @@ public class Plateau extends Observable{
 		//si il a pu jouer
 		if (endroitJoue != null) {
 			plateau[endroitJoue.x][endroitJoue.y] = joueurCourant.getNumJoueur();
-			joueurCourant = joueurCourant.getNumJoueur() == 1 ? joueur2 : joueur1;
+
+			//update mu et N
+			this.setChanged();
+			this.notifyObservers();
+			
+			switchJoueurCourant();
 
 			verifState();
 
+			//update joueurCourant
 			this.setChanged();
 			this.notifyObservers();
 
@@ -86,6 +92,10 @@ public class Plateau extends Observable{
 				jouer(0);
 			}
 		}
+	}
+
+	private void switchJoueurCourant() {
+		joueurCourant = joueurCourant.getNumJoueur() == 1 ? joueur2 : joueur1;		
 	}
 
 	public void jouerColonne(int colonne){
@@ -104,7 +114,7 @@ public class Plateau extends Observable{
 	}
 
 	/*
-	 * @return -1 si la partie n'est pas fini, 0 si il y a match null, et le numéro du vainceur si il y en a un
+	 * @return -1 si la partie n'est pas fini, 0 si il y a match null, et le numéro du vainqueur si il y en a un
 	 */
 	public int verifState() {
 		boolean win = false;
@@ -197,5 +207,9 @@ public class Plateau extends Observable{
 
 	public int getNumJoueurCourrant(){
 		return joueurCourant.getNumJoueur();
+	}
+
+	public Joueur getJoueurCourant() {
+		return joueurCourant;
 	}
 }

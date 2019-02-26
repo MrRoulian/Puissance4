@@ -33,8 +33,13 @@ public class RobotAleatoire extends Robot {
 	}
 
 	@Override
-	public Joueur clone() {
-		return new RobotAleatoire(numJoueur);
+	public int getN() {
+		return 0;
+	}
+
+	@Override
+	public double getMu() {
+		return 0;
 	}
 
 }

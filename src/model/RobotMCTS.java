@@ -3,11 +3,11 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 public class RobotMCTS extends Robot {
 	
 	long temps = 3;
+	private Node node;
 
 	public RobotMCTS(int numJoueur) {
 		super(numJoueur);
@@ -24,7 +24,7 @@ public class RobotMCTS extends Robot {
 		while (System.currentTimeMillis() - temps < 3000) {
 			nbOperation++;
 			// On prend le noeud qui est terminal ou qui a des fils non developpe
-			Node node = racine.nodeMax();
+			node = racine.nodeMax();
 			// On joue jusqu'a finir
 			while (!node.plateau.isEnded()) {
 				node.genererFils();
@@ -49,9 +49,7 @@ public class RobotMCTS extends Robot {
 			if (node.mu > max.mu) {
 				max = node;
 			}
-		}
-		
-		
+		}		
 		
 		return new Point(0, 0);
 	}
@@ -133,7 +131,16 @@ public class RobotMCTS extends Robot {
 
 
 	@Override
-	public Joueur clone() {
-		return new RobotMCTS(numJoueur);
+	public int getN() {
+		if(node != null)
+			return node.N;
+		return 0;
+	}
+
+	@Override
+	public double getMu() {
+		if(node != null)
+			return node.mu;
+		return 0;
 	}
 }
