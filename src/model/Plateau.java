@@ -33,7 +33,19 @@ public class Plateau extends Observable{
 
 		nbLignes = p.nbLignes;
 		nbColonnes = p.nbColonnes;
-		plateau = p.plateau.clone();
+		plateau = clone(p.plateau);
+	}
+
+	private int[][] clone(int[][] plateau2) {
+		int[][] res = new int[plateau2.length][plateau2[0].length];
+		
+		for (int i = 0; i < res.length; i++) {
+			for (int j = 0; j < res[0].length; j++) {
+				res[i][j] = plateau2[i][j];
+			}
+		}
+		
+		return res;
 	}
 
 	public void lancerPartie() {
@@ -188,7 +200,7 @@ public class Plateau extends Observable{
 		}
 
 		if (win) {
-			System.out.println("Joueur " + winner + " à gagné !");
+			//System.out.println("Joueur " + winner + " à gagné !");
 		}
 
 		if (end) {

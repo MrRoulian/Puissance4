@@ -26,7 +26,7 @@ public class RobotMCTS extends Robot {
 			// On prend le noeud qui est terminal ou qui a des fils non developpe
 			node = racine.nodeMax();
 			// On joue jusqu'a finir
-			while (!node.plateau.isEnded()) {
+			while (node.plateau.verifState() == -1) {
 				node.genererFils();
 				node = node.randomFilsNonVisite();
 			}
