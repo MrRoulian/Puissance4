@@ -26,10 +26,10 @@ public class Plateau extends Observable{
 	}
 
 	public Plateau(Plateau p) {
-		joueur1 = p.joueur1.clone();
-		joueur2 = p.joueur2.clone();
+		joueur1 = p.joueur1;
+		joueur2 = p.joueur2;
 
-		joueurCourant = p.joueurCourant.getNumJoueur() == 1 ? joueur1 : joueur2;
+		joueurCourant = p.joueurCourant;
 
 		nbLignes = p.nbLignes;
 		nbColonnes = p.nbColonnes;

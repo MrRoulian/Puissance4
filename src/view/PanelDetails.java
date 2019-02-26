@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.Plateau;
+import model.Robot;
 
 public class PanelDetails extends JPanel {
 	
@@ -37,6 +38,10 @@ public class PanelDetails extends JPanel {
 	}
 	
 	public void updateLabels() {
+		if (plateau.joueurCourantIsRobot()){
+			nbSimu.setText("Nombre de simulation : "+((Robot) plateau.getJoueurCourant()).getN());
+			pourcentageWin.setText(((int)((Robot)plateau.getJoueurCourant()).getMu()*100)+"%");
+		}
 		joueurCourrant.setBackground(plateau.getNumJoueurCourrant() == 1 ? Color.RED : Color.YELLOW);
 	}
 

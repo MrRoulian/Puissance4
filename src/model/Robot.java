@@ -15,5 +15,9 @@ public abstract class Robot extends Joueur{
 	public boolean isRobot() {
 		return true;
 	}
+	
+	public abstract int getN();
+	
+	public abstract double getMu();
 
 }
