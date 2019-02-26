@@ -70,7 +70,10 @@ public class Plateau extends Observable{
 		}
 	}
 
-	private void verifState() {
+	/*
+	 * @return -1 si la partie n'est pas fini, 0 si il y a match null, et le numéro du vainceur si il y en a un
+	 */
+	private int verifState() {
 		boolean win = false;
 		int winner = -1;
 
@@ -145,12 +148,15 @@ public class Plateau extends Observable{
 		}
 
 		if (end) {
+			winner = 0;
 			System.out.println("Match null");
 		}
 
 		if (end || win)	{
 			end = true;
 		}
+		
+		return winner;
 	}
 
 	public boolean isEnded() {
