@@ -24,7 +24,7 @@ public class Plateau extends Observable{
 		nbColonnes = colonnes;
 		plateau = new int[lignes][colonnes];
 	}
-	
+
 	public Plateau(Plateau p) {
 		joueur1 = p.joueur1.clone();
 		joueur2 = p.joueur2.clone();
@@ -35,7 +35,7 @@ public class Plateau extends Observable{
 		nbColonnes = p.nbColonnes;
 		plateau = p.plateau.clone();
 	}
-	
+
 	public void lancerPartie() {
 		if (joueurCourant.isRobot()) jouer(0);
 	}	
@@ -65,7 +65,7 @@ public class Plateau extends Observable{
 		}
 		return res;
 	}
-	
+
 	public void jouer(int colonne) {
 		Point endroitJoue = joueurCourant.jouer(colonne,this);		
 		//si il a pu jouer
@@ -77,14 +77,29 @@ public class Plateau extends Observable{
 
 			this.setChanged();
 			this.notifyObservers();
-			
+
 			if (end) {
 				return;
 			}
-			
+
 			if (joueurCourant.isRobot()){
 				jouer(0);
 			}
+		}
+	}
+
+	public void jouerColonne(int colonne){
+		int ligne = -1;
+		
+		for (int i = nbLignes-1; i >= 0; i--){
+			if (plateau[i][colonne] == 0){
+				ligne = i;
+				break;
+			}
+		}
+		
+		if (ligne > 0){
+			plateau[ligne][colonne] = joueurCourant.getNumJoueur();
 		}
 	}
 
@@ -172,14 +187,14 @@ public class Plateau extends Observable{
 		if (end || win)	{
 			end = true;
 		}
-		
+
 		return winner;
 	}
 
 	public boolean isEnded() {
 		return end;
 	}
-	
+
 	public int getNumJoueurCourrant(){
 		return joueurCourant.getNumJoueur();
 	}
