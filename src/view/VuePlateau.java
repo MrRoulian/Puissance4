@@ -24,6 +24,7 @@ public class VuePlateau implements Observer {
 	private HashMap<Point,JLabel> labels;
 	private JFrame frame;
 	private JPanel panel;
+	private PanelDetails details;
 	private Plateau plateau;
 
 	public VuePlateau(Plateau p) {
@@ -36,11 +37,12 @@ public class VuePlateau implements Observer {
 	private void initFrame() {
 		frame = new JFrame("Puissance 4");
 		panel = new JPanel();
+		details = new PanelDetails(plateau);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 800);
 		
-		layout = new GridLayout(plateau.getNbLignes()+1, plateau.getNbColonnes());
+		layout = new GridLayout(plateau.getNbLignes()+2, plateau.getNbColonnes());
 		panel.setLayout(layout);
 		
 		JButton b;
@@ -61,7 +63,10 @@ public class VuePlateau implements Observer {
 					panel.add("Label"+(i*plateau.getNbLignes()+j), label);					
 				}
 			}
-		}		
+		}
+		
+		panel.add("PanelDetails", details);
+		
 		frame.setContentPane(panel);		
 		frame.setVisible(true);
 		
@@ -88,6 +93,8 @@ public class VuePlateau implements Observer {
 			disableBouttons();
 			return;
 		}
+		
+		details.updateLabels();
 	}
 
 	private void disableBouttons() {

@@ -60,7 +60,7 @@ public class Plateau extends Observable{
 			this.setChanged();
 			this.notifyObservers();
 			
-			if (end){
+			if (end) {
 				return;
 			}
 			
@@ -155,5 +155,9 @@ public class Plateau extends Observable{
 
 	public boolean isEnded() {
 		return end;
+	}
+	
+	public int getNumJoueurCourrant(){
+		return joueurCourant.getNumJoueur();
 	}
 }
