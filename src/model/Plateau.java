@@ -98,13 +98,13 @@ public class Plateau extends Observable{
 			}
 		}
 		
-		if (ligne > 0){
+		if (ligne >= 0){
 			plateau[ligne][colonne] = joueurCourant.getNumJoueur();
 		}
 	}
 
 	/*
-	 * @return -1 si la partie n'est pas fini, 0 si il y a match null, et le numéro du vainceur si il y en a un
+	 * @return -1 si la partie n'est pas fini, 0 si il y a match null, et le numÃ©ro du vainceur si il y en a un
 	 */
 	private int verifState() {
 		boolean win = false;
@@ -112,20 +112,20 @@ public class Plateau extends Observable{
 
 		end = true;
 
-		//Vérif end
+		//VÃ©rif end
 		for (int i = 0; i < nbLignes; i++) {
 			for (int j = 0; j < nbColonnes; j++) {
-				//Si tous est à différent de 0 end restera à true
+				//Si tous est Ã  diffÃ©rent de 0 end restera Ã  true
 				end &= plateau[i][j] != 0;
 			}
 		}
 
-		//Vérif win
+		//VÃ©rif win
 		for (int i = 0; i < nbLignes; i++) {
 			if (!win && !end) {
 				for (int j = 0; j < nbColonnes; j++) {
 					if (i + 3 < nbLignes) {
-						//Vérif colonne vers le bas
+						//VÃ©rif colonne vers le bas
 						if (plateau[i][j] != 0 &&
 								plateau[i][j] == plateau[i + 1][j] &&
 								plateau[i + 1][j] == plateau[i + 2][j] &&
@@ -137,7 +137,7 @@ public class Plateau extends Observable{
 					}
 
 					if (j + 3 < nbColonnes)	{
-						//Vérif ligne vers la droite
+						//VÃ©rif ligne vers la droite
 						if (plateau[i][j] != 0 &&
 								plateau[i][j] == plateau[i][j + 1] &&
 								plateau[i][j + 1] == plateau[i][j + 2] &&
@@ -149,7 +149,7 @@ public class Plateau extends Observable{
 					}
 
 					if (j + 3 < nbColonnes && i + 3 < nbLignes)	{
-						//Vérif diago bas-droite
+						//VÃ©rif diago bas-droite
 						if (plateau[i][j] != 0 &&
 								plateau[i][j] == plateau[i + 1][j + 1] &&
 								plateau[i + 1][j + 1] == plateau[i + 2][j + 2] &&
@@ -161,7 +161,7 @@ public class Plateau extends Observable{
 					}
 
 					if (j - 3 >= 0 && i + 3 < nbLignes)	{
-						//Vérif diago bas-gauche
+						//VÃ©rif diago bas-gauche
 						if (plateau[i][j] != 0 &&
 								plateau[i][j] == plateau[i + 1][j - 1] &&
 								plateau[i + 1][j - 1] == plateau[i + 2][j - 2] &&
@@ -176,7 +176,7 @@ public class Plateau extends Observable{
 		}
 
 		if (win) {
-			System.out.println("Joueur " + winner + " à gagné !");
+			System.out.println("Joueur " + winner + " Ã  gagnÃ© !");
 		}
 
 		if (end) {
