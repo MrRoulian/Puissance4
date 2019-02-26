@@ -75,7 +75,7 @@ public class Plateau extends Observable{
 			//update mu et N
 			this.setChanged();
 			this.notifyObservers();
-			
+
 			switchJoueurCourant();
 
 			verifState();
@@ -100,18 +100,18 @@ public class Plateau extends Observable{
 
 	public void jouerColonne(int colonne){
 		int ligne = -1;
-		
+
 		for (int i = nbLignes-1; i >= 0; i--){
 			if (plateau[i][colonne] == 0){
 				ligne = i;
 				break;
 			}
 		}
-		
+
 		if (ligne >= 0){
 			plateau[ligne][colonne] = joueurCourant.getNumJoueur();
 		}
-		
+
 		verifState();
 	}
 
@@ -213,5 +213,15 @@ public class Plateau extends Observable{
 
 	public Joueur getJoueurCourant() {
 		return joueurCourant;
+	}
+
+	public Point findDifference(Plateau p){
+		for (int i = 0; i < nbLignes; i++) {
+			for (int j = 0; j < nbColonnes; j++) {
+				if (p.getCase(i, j) != plateau[i][j])
+					return new Point(i,j);
+			}
+		}
+		return null;
 	}
 }
