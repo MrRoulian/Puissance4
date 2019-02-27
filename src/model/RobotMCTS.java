@@ -9,7 +9,7 @@ import javax.swing.plaf.synth.SynthScrollPaneUI;
 public class RobotMCTS extends Robot {
 
 	long temps = 3;
-	private Node node;
+	private Node nodeAttribut;
 
 	public RobotMCTS(int numJoueur) {
 		super(numJoueur);
@@ -31,22 +31,23 @@ public class RobotMCTS extends Robot {
 			node = node.randomFilsNonVisite();
 			// On joue jusqu'a finir la partie 
 			while (node.plateau.verifState() == -1) {
-				if (node.fils.size() == 0) 
-					node.genererFils();
-				
+				if (node.fils.size() == 0) {
+					node.genererFils();					
+				}
+
 				node = node.randomFils();
-				
+
 				if (node.plateau.verifState() != -1) {
 					System.out.println("coucou j'ai fini");
 					break;
 				}
 				System.out.println();
-//				for (int i = 0; i < p.getNbLignes(); i++) {
-//					for (int j = 0; j < p.getNbColonnes(); j++) {
-//						System.out.print(" " + node.plateau.getCase(i, j));
-//					}
-//					System.out.println();
-//				}
+				//				for (int i = 0; i < p.getNbLignes(); i++) {
+				//					for (int j = 0; j < p.getNbColonnes(); j++) {
+				//						System.out.print(" " + node.plateau.getCase(i, j));
+				//					}
+				//					System.out.println();
+				//				}
 			}
 			int score = 0;
 			if (node.plateau.verifState() == p.getNumJoueurCourrant()) {
@@ -69,7 +70,7 @@ public class RobotMCTS extends Robot {
 				max = node;
 			}
 		}
-
+		nodeAttribut = max;
 		return p.findDifference(max.plateau);
 	}
 
@@ -128,15 +129,20 @@ public class RobotMCTS extends Robot {
 		}
 
 		public Node nodeMax() {
-			if (fils.size() == 0)
-				return this;
-			for (Node node : fils)
-				if (node.N == 0)
-					return this;
+			if (fils.size() == 0) {
+				return this;				
+			}
+			for (Node node : fils) {
+				if (node.N == 0) {
+					return this;					
+				}
+			}
 			Node nodeMax = this;
-			for (Node node : fils)
-				if (nodeMax.getBvalue() < node.nodeMax().getBvalue()) 
-					nodeMax = node;
+			for (Node node : fils) {
+				if (nodeMax.getBvalue() < node.nodeMax().getBvalue()) {
+					nodeMax = node;					
+				}	
+			}
 			return nodeMax;
 		}
 
@@ -147,6 +153,7 @@ public class RobotMCTS extends Robot {
 					return node;
 				}
 			}
+			System.err.println("Pas censé arrivé, on récup un fils non visité d'un noeud avec ses fils tous visités");
 			return null;
 		}
 
@@ -159,15 +166,15 @@ public class RobotMCTS extends Robot {
 
 	@Override
 	public int getN() {
-		if(node != null)
-			return node.N;
+		if(nodeAttribut != null)
+			return nodeAttribut.N;
 		return 0;
 	}
 
 	@Override
 	public double getMu() {
-		if(node != null)
-			return node.mu;
+		if(nodeAttribut != null)
+			return nodeAttribut.mu;
 		return 0;
 	}
 }
