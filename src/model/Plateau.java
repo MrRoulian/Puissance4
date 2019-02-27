@@ -15,7 +15,7 @@ public class Plateau extends Observable{
 	private Joueur joueur1, joueur2;
 
 	public Plateau(int lignes, int colonnes) {
-		joueur1 = new RobotMCTS(1);
+		joueur1 = new Humain(1);
 		joueur2 = new RobotMCTS(2);
 
 		joueurCourant = joueur1;
@@ -96,8 +96,8 @@ public class Plateau extends Observable{
 			switchJoueurCourant();
 
 			//update joueurCourant
-			this.setChanged();
-			this.notifyObservers();
+			/*this.setChanged();
+			this.notifyObservers();*/
 
 			if (joueurCourant.isRobot()){
 				jouer(0);

@@ -42,4 +42,9 @@ public class RobotAleatoire extends Robot {
 		return 0;
 	}
 
+	@Override
+	public String toString() {
+		return "RobotAleatoire "+numJoueur;
+	}
+
 }

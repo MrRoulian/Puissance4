@@ -13,7 +13,7 @@ public class PanelDetails extends JPanel {
 	
 	private GridLayout layout;
 	private Plateau plateau;
-	private JLabel nbSimu, pourcentageWin, joueurCourrant, victoire;
+	private JLabel name, nbSimu, pourcentageWin, joueurCourrant, victoire;
 
 	public PanelDetails(Plateau p) {
 		this.plateau = p;
@@ -23,6 +23,7 @@ public class PanelDetails extends JPanel {
 	private void initFrame() {		
 		layout = new GridLayout(10,1);
 		
+		name = new JLabel();
 		nbSimu = new JLabel("Nombre de simulation : ");
 		pourcentageWin = new JLabel("Mu :");
 		joueurCourrant = new JLabel("Joueur courant");
@@ -33,6 +34,7 @@ public class PanelDetails extends JPanel {
 		
 		this.setLayout(layout);
 		
+		this.add(name);
 		this.add("nbSimu", nbSimu);
 		this.add("%win", pourcentageWin);
 		this.add("joueur", joueurCourrant);
@@ -40,11 +42,13 @@ public class PanelDetails extends JPanel {
 	}
 	
 	public void updateLabels() {
-		if (plateau.joueurCourantIsRobot()){
+		name.setText(plateau.getJoueurCourant().toString());
+		if (plateau.joueurCourantIsRobot()){			
 			nbSimu.setText("Nombre de simulation : "+((Robot) plateau.getJoueurCourant()).getN());
 			pourcentageWin.setText("Mu : "+(int) (((Robot)plateau.getJoueurCourant()).getMu()*100)+"%");
 		}
-		joueurCourrant.setBackground(plateau.getNumJoueurCourrant() == 1 ? Color.RED : Color.YELLOW);
+		joueurCourrant.setText("Joueur courant : "+(plateau.getNumJoueurCourrant()%2+1));
+		joueurCourrant.setBackground(plateau.getNumJoueurCourrant() == 2 ? Color.RED : Color.YELLOW);
 		
 		if (plateau.isEnded()){
 			switch(plateau.verifState()){

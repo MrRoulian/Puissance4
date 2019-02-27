@@ -32,4 +32,9 @@ public class Humain extends Joueur {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "Humain "+numJoueur;
+	}
+
 }

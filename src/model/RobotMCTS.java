@@ -171,4 +171,9 @@ public class RobotMCTS extends Robot {
 			return nodeAttribut.mu;
 		return 0;
 	}
+
+	@Override
+	public String toString() {
+		return "RobotMCTS "+numJoueur;
+	}
 }

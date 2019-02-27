@@ -19,8 +19,6 @@ public abstract class Joueur {
 	public abstract boolean isRobot();
 	
 	@Override
-	public String toString(){
-		return "Joueur "+numJoueur;
-	}
+	public abstract String toString();
 
 }
