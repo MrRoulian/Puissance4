@@ -42,7 +42,7 @@ public class PanelDetails extends JPanel {
 	public void updateLabels() {
 		if (plateau.joueurCourantIsRobot()){
 			nbSimu.setText("Nombre de simulation : "+((Robot) plateau.getJoueurCourant()).getN());
-			pourcentageWin.setText("Mu : "+((int)((Robot)plateau.getJoueurCourant()).getMu()*100)+"%");
+			pourcentageWin.setText("Mu : "+(int) (((Robot)plateau.getJoueurCourant()).getMu()*100)+"%");
 		}
 		joueurCourrant.setBackground(plateau.getNumJoueurCourrant() == 1 ? Color.RED : Color.YELLOW);
 		

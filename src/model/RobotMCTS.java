@@ -28,7 +28,9 @@ public class RobotMCTS extends Robot {
 			// On prend le noeud qui est terminal ou qui a des fils non developpe
 			Node node = racine.nodeMax();
 			// On prend un fils non developpe
-			node = node.randomFilsNonVisite();
+			if (node.plateau.verifState() == -1) {
+				node = node.randomFilsNonVisite();				
+			}
 			// On joue jusqu'a finir la partie 
 			while (node.plateau.verifState() == -1) {
 				if (node.fils.size() == 0) {
@@ -36,18 +38,14 @@ public class RobotMCTS extends Robot {
 				}
 
 				node = node.randomFils();
-
-				if (node.plateau.verifState() != -1) {
-					System.out.println("coucou j'ai fini");
-					break;
-				}
-				System.out.println();
-				//				for (int i = 0; i < p.getNbLignes(); i++) {
-				//					for (int j = 0; j < p.getNbColonnes(); j++) {
-				//						System.out.print(" " + node.plateau.getCase(i, j));
-				//					}
-				//					System.out.println();
-				//				}
+				
+				//System.out.println();
+				//for (int i = 0; i < p.getNbLignes(); i++) {
+				//	for (int j = 0; j < p.getNbColonnes(); j++) {
+				//		System.out.print(" " + node.plateau.getCase(i, j));
+				//	}
+				//	System.out.println();
+				//}
 			}
 			int score = 0;
 			if (node.plateau.verifState() == p.getNumJoueurCourrant()) {
@@ -60,12 +58,11 @@ public class RobotMCTS extends Robot {
 				node.update(score);
 			}
 		}
-		System.out.println(nbOperation);
+		//System.out.println(nbOperation);
 
 		// On recupere le meilleur coup (recompense "max") 
 		Node max = racine.fils.get(0);
 		for (Node node : racine.fils) {
-			System.out.println(node.mu);
 			if (node.mu > max.mu) {
 				max = node;
 			}
@@ -122,28 +119,25 @@ public class RobotMCTS extends Robot {
 		}
 
 		public double getBvalue() {
-			if (parent == null ) {
-				return 0;
-			}
-			return mu + signe * (C * Math.sqrt(Math.log10(parent.N) / N));
+			return mu * signe + (C * Math.sqrt(Math.log10(parent.N) / N));
 		}
 
 		public Node nodeMax() {
 			if (fils.size() == 0) {
-				return this;				
+				return this;		
 			}
 			for (Node node : fils) {
 				if (node.N == 0) {
 					return this;					
 				}
 			}
-			Node nodeMax = this;
+			Node nodeMax = fils.get(0);
 			for (Node node : fils) {
-				if (nodeMax.getBvalue() < node.nodeMax().getBvalue()) {
+				if (nodeMax.getBvalue() < node.getBvalue()) {
 					nodeMax = node;					
 				}	
 			}
-			return nodeMax;
+			return nodeMax.nodeMax();
 		}
 
 		public Node randomFilsNonVisite() {
