@@ -96,8 +96,8 @@ public class Plateau extends Observable{
 			switchJoueurCourant();
 
 			//update joueurCourant
-			/*this.setChanged();
-			this.notifyObservers();*/
+			this.setChanged();
+			this.notifyObservers();
 
 			if (joueurCourant.isRobot()){
 				jouer(0);

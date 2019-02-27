@@ -4,11 +4,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.plaf.synth.SynthScrollPaneUI;
-
 public class RobotMCTS extends Robot {
 
-	long temps = 3;
+	long temps;
 	private Node nodeAttribut;
 
 	public RobotMCTS(int numJoueur) {
@@ -21,44 +19,29 @@ public class RobotMCTS extends Robot {
 		// On cree la racine de l'arbre 
 		Node racine = new Node(p);
 		racine.genererFils();
-
-		int nbOperation = 0;
+		// Tant qu'il reste du temps on applique l'algo 
 		while (System.currentTimeMillis() - temps < 3000) {
-			nbOperation++;
-			// On prend le noeud qui est terminal ou qui a des fils non developpe
+			// On prend le noeud qui est terminal ou qui a des fils non developpe en prenant les meilleurs Bvalue 
 			Node node = racine.nodeMax();
-			// On prend un fils non developpe
+			// Si la partie n'est pas finie, on prend un fils non developpe
 			if (node.plateau.verifState() == -1) {
 				node = node.randomFilsNonVisite();				
-			}
-			// On joue jusqu'a finir la partie 
-			while (node.plateau.verifState() == -1) {
-				if (node.fils.size() == 0) {
-					node.genererFils();					
+				// On simule jusqu'a finir la partie 
+				while (node.plateau.verifState() == -1) {
+					if (node.fils.size() == 0)
+						node.genererFils();
+					node = node.randomFils();
 				}
-
-				node = node.randomFils();
-				
-				//System.out.println();
-				//for (int i = 0; i < p.getNbLignes(); i++) {
-				//	for (int j = 0; j < p.getNbColonnes(); j++) {
-				//		System.out.print(" " + node.plateau.getCase(i, j));
-				//	}
-				//	System.out.println();
-				//}
 			}
+			// On recupere le score de la partie (1 si victoire 0 sinon)
 			int score = 0;
 			if (node.plateau.verifState() == p.getNumJoueurCourrant()) {
 				score = 1;
 			}
 			// On met a jours les N et les mu 
 			node.update(score);
-			while (node.parent != null) {
-				node = node.parent;
-				node.update(score);
-			}
 		}
-		//System.out.println(nbOperation);
+		System.out.println(racine.N);
 
 		// On recupere le meilleur coup (recompense "max") 
 		Node max = racine.fils.get(0);
@@ -84,7 +67,7 @@ public class RobotMCTS extends Robot {
 		public double mu;
 
 		public Node(Plateau p) {
-			signe = 1;
+			signe = -1;
 			plateau = new Plateau(p);
 			fils = new ArrayList<Node>();
 		}
@@ -110,10 +93,9 @@ public class RobotMCTS extends Robot {
 		}
 
 		public void update(double newProba) {
-			if (N == 0) {
-				mu = newProba;
-			} else {
+			if (parent != null) {
 				mu = (mu * N + newProba) / (N + 1);
+				parent.update(newProba);
 			}
 			N++;
 		}
