@@ -14,11 +14,11 @@ public class Plateau extends Observable{
 	private Joueur joueurCourant;
 	private Joueur joueur1, joueur2;
 
-	public Plateau(int lignes, int colonnes) {
-		joueur1 = new Humain(1);
-		joueur2 = new RobotMCTS(2);
+	public Plateau(int lignes, int colonnes, Joueur j1, Joueur j2, Joueur joueurQuiCommence) {
+		joueur1 = j1;
+		joueur2 = j2;
 
-		joueurCourant = joueur1;
+		joueurCourant = joueurQuiCommence;
 
 		nbLignes = lignes;
 		nbColonnes = colonnes;
