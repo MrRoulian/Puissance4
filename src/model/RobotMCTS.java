@@ -42,12 +42,12 @@ public class RobotMCTS extends Robot {
 			// On met a jours les N et les mu 
 			node.update(score);
 		}
-		System.out.println(racine.N);
+		// System.out.println(racine.N);
 
-		// On recupere le meilleur coup (recompense "max") 
+		// On recupere le meilleur coup (recompense "robuste") 
 		Node max = racine.fils.get(0);
 		for (Node node : racine.fils) {
-			if (node.mu > max.mu) {
+			if (node.N > max.N) {
 				max = node;
 			}
 		}
