@@ -85,9 +85,13 @@ public class RobotMCTS extends Robot {
 		}
 
 		public void genererFils() {
+			// On recupere la liste des colonnes jouables 
 			for (Integer indice : plateau.getIndicesColonnesJouables()) {
+				// On copie le plateau
 				Plateau p = new Plateau(plateau);
+				// On joue dans la colonne jouable
 				p.jouerColonne(indice);
+				// On ajoute le fils a la liste de fils 
 				fils.add(new Node(p, this));
 			}
 		}
@@ -105,14 +109,17 @@ public class RobotMCTS extends Robot {
 		}
 
 		public Node nodeMax() {
+			// Le noeud est terminal 
 			if (fils.size() == 0) {
 				return this;		
 			}
+			// Le noeud n'a pas tout ses fils visite
 			for (Node node : fils) {
 				if (node.N == 0) {
 					return this;					
 				}
 			}
+			// Recherche de la meilleur B-valeur
 			Node nodeMax = fils.get(0);
 			for (Node node : fils) {
 				if (nodeMax.getBvalue() < node.getBvalue()) {
@@ -129,7 +136,7 @@ public class RobotMCTS extends Robot {
 					return node;
 				}
 			}
-			System.err.println("Pas censé arrivé, on récup un fils non visité d'un noeud avec ses fils tous visités");
+			System.err.println("Pas cense arrive, on recupere un fils non visite d'un noeud avec ses fils tous visites");
 			return null;
 		}
 
