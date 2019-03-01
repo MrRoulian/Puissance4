@@ -7,6 +7,7 @@ import java.util.Collections;
 public class RobotMCTS extends Robot {
 
 	long temps;
+	int timeToPlay = 3000;
 	private Node nodeAttribut;
 
 	public RobotMCTS(int numJoueur) {
@@ -20,7 +21,7 @@ public class RobotMCTS extends Robot {
 		Node racine = new Node(p);
 		racine.genererFils();
 		// Tant qu'il reste du temps on applique l'algo 
-		while (System.currentTimeMillis() - temps < 3000) {
+		while (System.currentTimeMillis() - temps < timeToPlay) {
 			// On prend le noeud qui est terminal ou qui a des fils non developpe en prenant les meilleurs Bvalue 
 			Node node = racine.nodeMax();
 			// Si la partie n'est pas finie, on prend un fils non developpe
@@ -52,6 +53,10 @@ public class RobotMCTS extends Robot {
 		}
 		nodeAttribut = max;
 		return p.findDifference(max.plateau);
+	}
+	
+	public void setTimeToPlay(int ttp){
+		this.timeToPlay=ttp;
 	}
 
 

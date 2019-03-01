@@ -18,14 +18,14 @@ public class Main {
 			System.out.println("Selectionner la partie souhaiter :\n\t"
 					+ "1. Humain VS Humain\n\t"
 					+ "2. Humain VS Robot\n\t"
-					+ "3. Robot VS Robot\n");
+					+ "3. Robot VS Robot");
 			rep = sc.nextInt();
 			
 		} while (rep != 1 && rep != 2 && rep != 3);		
 		
 		
 		do {
-			System.out.println("Qui commence ? 1 ou 2 ?\n");		
+			System.out.println("Qui commence ? 1 ou 2 ?");		
 
 			rep2 = sc.nextInt();
 		} while (rep2 != 1 && rep2 != 2);
@@ -41,10 +41,31 @@ public class Main {
 		case 2:
 			j1 = new Humain(1);
 			j2 = new RobotMCTS(2);
+			
+			do {
+				System.out.println("Donner le temps (en miliseconde) qu'aura le " + j2.toString() + " pour jouer chaque coup.");
+				rep = sc.nextInt();				
+			} while (rep < 0);
+			
+			((RobotMCTS)j2).setTimeToPlay(rep);
+			
 			break;
 		case 3:
 			j1 = new RobotMCTS(1);
+			do {
+				System.out.println("Donner le temps (en miliseconde) qu'aura le " + j1.toString() + " pour jouer chaque coup.");
+				rep = sc.nextInt();				
+			} while (rep < 0);
+			
+			((RobotMCTS)j1).setTimeToPlay(rep);
+			
 			j2 = new RobotMCTS(2);
+			do {
+				System.out.println("Donner le temps (en miliseconde) qu'aura le " + j2.toString() + " pour jouer chaque coup.");
+				rep = sc.nextInt();				
+			} while (rep < 0);
+			
+			((RobotMCTS)j2).setTimeToPlay(rep);
 			break;
 		}
 
